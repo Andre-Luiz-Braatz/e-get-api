@@ -37,7 +37,6 @@ app.get("/signin", (request, response) => {
 
 app.post("/signup", (request, response) => {
   const {email,password} = request.body;
-  console.log(email,password);
   if (!email || !password)
     return response.status(500).json({ error: "Invalid data!" });
 
@@ -112,9 +111,8 @@ app.post("/product", (request, response) => {
   const {user_id,category_id,name,description,value,stock} = request.body;
   if (!user_id || !category_id || !name || !description || !value || !stock)
     return response.status(500).send();
-
-  const sql = `insert into product (category_id,name,description,value,stock)
-  values ('${category_id}','${name}','${description}','${value}','${stock}') returning *`;
+    const sql = `insert into product (category_id,name,description,value,stock)
+    values ('${category_id}','${name}','${description}','${value}','${stock}') returning *`;
 
   pool.query(sql, (error, result) => {
     if (error) return response.status(401).send();
